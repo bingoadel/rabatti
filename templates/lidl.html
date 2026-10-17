@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Lidl-Rabatte{% endblock %}
+{% block container_class %}wide{% endblock %}
+
+{% block content %}
+  <p class="back"><a href="{% url 'start' %}">Zur Auswahl</a></p>
+  <h1>Lidl-Preisrabatte</h1>
+  <p class="intro">Gib einen Ort oder eine Postleitzahl ein. Die Liste stammt aus dem öffentlichen Aktionsprospekt auf lidl.de, in der bundesweiten Ausgabe.</p>
+
+  <form method="post" id="lidl-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" id="submit-button">Rabatte anzeigen</button>
+  </form>
+
+  <div id="waiting" class="waiting" hidden role="status" aria-live="polite">
+    <span class="spinner" aria-hidden="true"></span>
+    <p>Prospekt wird geladen…</p>
+  </div>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  {% if stores|length > 1 %}
+    <h2>Prospekt wählen</h2>
+    <div class="store-list">
+      {% for item in stores %}
+        <button type="submit" form="lidl-form" name="store_key" value="{{ item.store_key }}" class="store-button{% if store and item.store_key == store.store_key %} is-selected{% endif %}">
+          <img class="lidl-logo" src="{% static 'lidl-logo.svg' %}" alt="" />
+          {{ item.label }}
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if store %}
+    <h2 class="store-name">
+      <img class="lidl-logo" src="{% static 'lidl-logo.svg' %}" alt="Lidl" />
+      <span>{{ store.label }}</span>
+    </h2>
+  {% endif %}
+
+  {% if offers %}
+    <ul class="offers">
+      {% for offer in offers %}
+        <li>
+          {% if offer.image_url %}
+            <img class="product-photo" src="{{ offer.image_url }}" alt="" />
+          {% endif %}
+          <div class="offer-text">
+            <strong>{{ offer.name }}</strong>
+            <span class="price">{{ offer.price }}</span>
+            {% if offer.old_price %}
+              <span class="old-price">statt {{ offer.old_price }}</span>
+            {% endif %}
+            {% if offer.discount %}
+              <span class="discount">{{ offer.discount }}</span>
+            {% endif %}
+            {% if offer.period %}
+              <span class="period">{{ offer.period }}</span>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% elif offers is not None %}
+    <p>Für diese Filiale gibt es gerade keine Rabatte.</p>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    document.getElementById("lidl-form").addEventListener("submit", function () {
+      document.getElementById("waiting").hidden = false;
+      window.setTimeout(function () {
+        document.getElementById("submit-button").disabled = true;
+      }, 0);
+    });
+  </script>
+{% endblock %}

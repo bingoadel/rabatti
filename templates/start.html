@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Werkzeug wählen{% endblock %}
+
+{% block content %}
+  <h1>Was möchtest du nutzen?</h1>
+  <p class="intro">Wähle ein Werkzeug. Du kannst später über „Zur Auswahl“ zurückkehren.</p>
+  <div class="choices">
+    <a class="choice" href="{% url 'historiker' %}">
+      <strong>Historiker-Tool</strong>
+      <span>Stelle eine Frage und erhalte eine Antwort mit Gruß.</span>
+    </a>
+    <a class="choice" href="{% url 'lidl' %}">
+      <strong>Lidl-Tool</strong>
+      <span>Zeigt Angebote aus dem öffentlichen Lidl-Web-Prospekt für einen Ort.</span>
+    </a>
+  </div>
+{% endblock %}

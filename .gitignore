@@ -1,0 +1,39 @@
+﻿# Dein lokales Python-Environment
+env_kitogo.env/
+venv/
+.venv/
+env/
+.env/
+
+# Python Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenv metadata
+*.egg-info/
+*.egg
+.eggs/
+
+# Build / Distribution
+build/
+dist/
+*.whl
+
+# dotenv files (keine Secrets ins Repo!)
+.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Cache
+.cache/
+.mypy_cache/
+.pytest_cache/

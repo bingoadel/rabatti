@@ -1,0 +1,201 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    margin-top: 0;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    resize: vertical;
+}
+
+button {
+    margin-top: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.waiting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    color: #1e3a8a;
+}
+
+.waiting[hidden] {
+    display: none;
+}
+
+.waiting p {
+    margin: 0;
+}
+
+.spinner {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #dbeafe;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.answer-box {
+    margin-top: 30px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.container.wide {
+    max-width: 860px;
+}
+
+.intro {
+    color: #374151;
+}
+
+.back a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.choices {
+    display: grid;
+    gap: 16px;
+}
+
+.choice {
+    display: grid;
+    gap: 6px;
+    padding: 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.choice:hover {
+    border-color: #2563eb;
+}
+
+.error {
+    margin-top: 18px;
+    color: #b91c1c;
+}
+
+.store-list {
+    display: grid;
+    gap: 8px;
+}
+
+.store-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lidl-logo {
+    width: 36px;
+    height: 36px;
+    flex: none;
+}
+
+.store-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    background: #eff6ff;
+    color: #1e3a8a;
+}
+
+.store-button .lidl-logo {
+    width: 28px;
+    height: 28px;
+}
+
+.store-button.is-selected {
+    background: #2563eb;
+    color: white;
+}
+
+.offers {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+}
+
+.offers li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid #e5e7eb;
+}
+
+.offer-text {
+    display: grid;
+    gap: 4px;
+}
+
+.product-photo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    flex: none;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.price {
+    font-weight: bold;
+}
+
+.old-price {
+    color: #6b7280;
+    text-decoration: line-through;
+}
+
+.discount {
+    color: #047857;
+}
+
+.period {
+    color: #4b5563;
+    font-size: 0.9rem;
+}
