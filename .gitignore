@@ -33,6 +33,9 @@ dist/
 # Logs
 *.log
 
+# Von collectstatic erzeugt
+staticfiles/
+
 # Cache
 .cache/
 .mypy_cache/

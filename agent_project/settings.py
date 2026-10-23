@@ -8,7 +8,14 @@ SECRET_KEY = "django-insecure-dev-key-change-me"
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['rabattparty.de', 'www.rabattparty.de', '87.106.41.173', '127.0.0.1', 'localhost']
+
+# Hinzufügen, damit Django HTTPS-Formulare von Ihrer Domain akzeptiert:
+CSRF_TRUSTED_ORIGINS = [
+    'https://rabattparty.de',
+    'https://www.rabattparty.de'
+]
+
 
 # INSTALLED_APPS listet alle Django-Apps auf, die geladen werden sollen.
 # "models" ist die App für die Datenbankschicht. Views und Templates liegen
@@ -82,5 +89,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+# Zielordner für collectstatic. Getrennt von static/, sonst bricht der Image-Bau ab.
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
