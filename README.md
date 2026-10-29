@@ -7,11 +7,11 @@ Dieses Projekt zeigt ein kleines Django-Webtool, bei dem der Nutzer eine Frage i
 - `views/` : Seiten, Formular und URL-Zuordnung.
 - `models/` : Datenbankmodelle sowie `agentservice/`, `Tools/` und `use_cases/`.
 - `templates/` : HTML-Seiten.
-- `agent_project/` : Django-Projekt mit Einstellungen, URLs und Projekt-Start.
+- `config/` : Django-Projekt mit Einstellungen, URLs und Projekt-Start.
 
 ## Wichtige Django-Konzepte
 
-### 1. `agent_project/urls.py`
+### 1. `config/urls.py`
 
 ```python
 urlpatterns = [

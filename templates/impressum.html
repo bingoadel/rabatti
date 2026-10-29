@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Impressum{% endblock %}
+{% block container_class %}impressum{% endblock %}
+
+{% block content %}
+  <p class="back"><a href="{% url 'start' %}">Zur Startseite</a></p>
+  <h1>Impressum</h1>
+  <p class="impressum-lead">Angaben gemäß § 5 DDG</p>
+
+  <h2>Anbieter</h2>
+  <p>Dr. Adel Nasser</p>
+  <p>Selbständiger Softwareentwickler</p>
+  <p>
+    Richard-Wagner-Str. 27<br />
+    73207 Plochingen<br />
+    Deutschland
+  </p>
+
+  <h2>Kontakt</h2>
+  <p>E-Mail: <a href="mailto:info@cvboostai.de">info@cvboostai.de</a></p>
+  <p>Telefon: <a href="tel:+4917622699702">0176 22699702</a></p>
+
+  <h2>Umsatzsteuer</h2>
+  <p>USt-ID: DE278675449</p>
+
+  <h2>Verantwortlich für den Inhalt</h2>
+  <p>Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV:</p>
+  <p>Dr. Adel Nasser</p>
+
+  <h2>Ortsdaten</h2>
+  <p>
+    Die Orts- und Postleitzahlenauswahl nutzt Daten von
+    <a href="https://www.geonames.org/">GeoNames</a>,
+    lizenziert unter
+    <a href="https://creativecommons.org/licenses/by/4.0/deed.de">Creative Commons Namensnennung 4.0</a>.
+    Für die Anzeige wurden die Angaben als „Postleitzahl Ort“ aufbereitet.
+    Bei mehrfach vorkommenden Namen ohne eigene Postleitzahl ist das Bundesland ergänzt.
+  </p>
+
+  <h2>CO2-Daten</h2>
+  <p>
+    Die CO2-Werte sind Richtwerte aus der
+    <a href="https://data.ademe.fr/datasets/agribalyse-synthese">AGRIBALYSE-4-Synthese</a>
+    der ADEME (Agence de la transition écologique), Datenstand AGRIBALYSE 3.2.
+    Verwendet wird der Indikator Klimawandel in Kilogramm CO2-Äquivalent je Kilogramm Fertigprodukt.
+    Stand der hier genutzten Fassung: 30. Juni 2026.
+  </p>
+  <p>
+    Eine eigene Bio-Zahl gibt es nur bei Hähnchen, Schwein, Rind und Apfel.
+    Sie ist aus dem Hofpaar von
+    <a href="https://doi.org/10.57745/XTENSJ">AGRIBALYSE 3.2</a>
+    abgeleitet und keine eigene Zeile des Fertigprodukts.
+    Marke, Filiale und Zusatzstoffe ändern den Wert nicht.
+  </p>
+  <p>
+    Die Daten stehen unter der
+    <a href="https://www.etalab.gouv.fr/licence-ouverte-open-licence">Licence Ouverte Etalab 2.0</a>.
+    Quelle: ADEME, AGRIBALYSE. Diese Nennung ist keine Empfehlung oder Anerkennung durch die ADEME.
+    Hinweise zum Gebrauch stehen in den
+    <a href="https://doc.agribalyse.fr/documentation/utiliser-agribalyse/precautions-et-conditions-dusage">Nutzungsbedingungen von AGRIBALYSE</a>.
+  </p>
+{% endblock %}

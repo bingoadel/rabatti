@@ -13,7 +13,7 @@ def main() -> None:
         Django verwendet diese Einstellung, damit alle App- und Projektkonfigurationen
         geladen werden, bevor ein Server oder ein Befehl ausgeführt wird.
     """
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "agent_project.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
     try:
         from django.core.management import execute_from_command_line

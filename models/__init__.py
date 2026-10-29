@@ -1,7 +1,7 @@
 """Fachliche Schicht der Anwendung.
 
 Summary:
-    Django erwartet Datenbankmodelle in diesem Paket. Eigene Tabellen gibt
-    es noch nicht. Die vorhandene Logik liegt deshalb hier daneben:
-    agentservice, Tools und use_cases.
+    Django erwartet Datenbankmodelle in diesem Paket. Die Produktarten liegen
+    in PostgreSQL. Die übrige Logik liegt daneben: agentservice, Tools und
+    use_cases.
 """

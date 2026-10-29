@@ -1,0 +1,31 @@
+Category,Column Name (English),Description (German)
+Core Data,id,Eindeutiger interner Datenbank-Schlüssel (Primary Key)
+Core Data,gtin_ean,13-stellige europäische Artikelnummer (EAN)
+Core Data,product_name,Offizieller Produktname
+Core Data,brand,Markenname oder Hinweis auf Eigenmarke
+Core Data,manufacturer,Herstellerunternehmen
+Categorization,main_category,Oberste Kategorieebene (z. B. Molkereiprodukte)
+Categorization,sub_category,Feinere Zuordnung (z. B. Joghurt)
+Categorization,internal_commodity_group,Interne Warengruppennummer/-bezeichnung
+Quantity & Packaging,net_quantity,Reine Füllmenge als Zahl
+Quantity & Packaging,unit,"Maßeinheit der Füllmenge (g, kg, ml, l, Stück)"
+Quantity & Packaging,packaging_type,"Art der Verpackung (z. B. Einwegplastik, Glas)"
+Quantity & Packaging,is_deposit_required,"Boolean (true/false), ob Pfand auf der Verpackung liegt"
+Quantity & Packaging,deposit_value,Genauer Pfandbetrag in Euro
+Store & Location,supermarket_name,"Name der Kette (z. B. REWE, Aldi Süd)"
+Store & Location,store_id,Eindeutige ID der spezifischen Filiale
+Store & Location,store_address,Vollständige Adresse der Filiale (Strukturierte Daten oder String)
+Pricing & Availability,current_price,Aktueller Verkaufspreis in Euro
+Pricing & Availability,calculated_base_price,Gesetzlicher Grundpreis pro 100g/1kg/1l
+Pricing & Availability,special_pricing,"Art des Sonderpreises (z. B. Prospekt-Angebot, MHD-Rabatt, Coupon, Aktionspreis)"
+Pricing & Availability,regular_price,Standardpreis außerhalb von Aktionen
+Pricing & Availability,last_updated,Zeitstempel der letzten Preisaktualisierung
+Ingredients & Nutrition,nutriscore,Nutri-Score (A-E)
+Ingredients & Nutrition,ingredients_list,Vollständiger Text der Inhaltsstoffe
+Ingredients & Nutrition,allergens,Enthaltene Allergene als Liste
+Ingredients & Nutrition,dietary_tags,"Ernährungsformen (vegan, vegetarisch, glutenfrei, etc.)"
+Ingredients & Nutrition,is_organic,"Boolean, ob es sich um ein zertifiziertes Bio-Produkt handelt"
+Ingredients & Nutrition,nutrition_per_100g,"JSON oder Unterspalten für Brennwert, Fett, Zucker, Salz, etc."
+Media & Marketing,image_url,Link zum Produktbild
+Media & Marketing,description,Ausführlichere Produktbeschreibung
+Ingredients & Nutrition,additives,Konservierungs- und Zusatzstoffe als JSON-Liste

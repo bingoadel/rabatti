@@ -1,18 +1,316 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Werkzeug wählen{% endblock %}
+{% block title %}Rabattparty{% endblock %}
+{% block container_class %}landing{% endblock %}
 
 {% block content %}
-  <h1>Was möchtest du nutzen?</h1>
-  <p class="intro">Wähle ein Werkzeug. Du kannst später über „Zur Auswahl“ zurückkehren.</p>
-  <div class="choices">
-    <a class="choice" href="{% url 'historiker' %}">
-      <strong>Historiker-Tool</strong>
-      <span>Stelle eine Frage und erhalte eine Antwort mit Gruß.</span>
-    </a>
-    <a class="choice" href="{% url 'lidl' %}">
-      <strong>Lidl-Tool</strong>
-      <span>Zeigt Angebote aus dem öffentlichen Lidl-Web-Prospekt für einen Ort.</span>
-    </a>
-  </div>
+  <h1 class="search-title">Einkaufszettel optimieren</h1>
+
+  <form class="search" id="discount-search" method="get" action="{% url 'start' %}" data-katalog="/katalog.json?v=12">
+    <div class="field">
+      <div class="place-row">
+        <div class="place suggest">
+          <label for="wo">Wo</label>
+          <input id="wo" type="text" name="wo" value="{{ place }}" placeholder="Ort oder Postleitzahl" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="wo-list" />
+          <ul id="wo-list" class="suggestions" role="listbox" hidden></ul>
+        </div>
+        <div class="radius">
+          <label for="umkreis">Umkreis</label>
+          <select id="umkreis" name="umkreis">
+            <option value="5" {% if radius == "5" %}selected{% endif %}>5 km</option>
+            <option value="10" {% if radius == "10" %}selected{% endif %}>10 km</option>
+            <option value="15" {% if radius == "15" %}selected{% endif %}>15 km</option>
+            <option value="20" {% if radius == "20" %}selected{% endif %}>20 km</option>
+            <option value="30" {% if radius == "30" %}selected{% endif %}>30 km</option>
+            <option value="40" {% if radius == "40" %}selected{% endif %}>40 km</option>
+            <option value="50" {% if radius == "50" %}selected{% endif %}>50 km</option>
+          </select>
+        </div>
+      </div>
+      <label for="markt">Supermarkt
+        <select id="markt" name="maerkte">
+          <option value="">Supermarkt wählen</option>
+          {% for slug, label in supermarkets %}
+            <option value="{{ slug }}" {% if slug in selected_markets %}selected{% endif %}>{{ label|capfirst }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+    <div class="field shopping-create">
+      <p class="shopping-legend" id="einkaufszettel-label">Einkaufszettel erstellen</p>
+      <ul id="chosen-products" class="chosen-products">
+        {% for item in product_list %}
+          <li class="product-line">
+            <div class="suggest product-entry">
+              <input class="product-field" type="text" name="produkte" value="{{ item.name }}" placeholder="Produktart, zum Beispiel Magerquark" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="produkt-list-{{ forloop.counter }}" />
+              <ul id="produkt-list-{{ forloop.counter }}" class="suggestions" role="listbox" hidden></ul>
+            </div>
+            <span class="amount-stepper" data-kind="{{ item.name }}">
+              <button type="button" class="amount-step amount-minus" aria-label="Menge für {{ item.name }} verringern">−</button>
+              <input type="text" inputmode="decimal" name="mengen" value="{{ item.amount }}" data-step="{{ item.step }}" data-min="{{ item.minimum }}" data-default="{{ item.default }}" aria-label="Menge für {{ item.name }}" />
+              <button type="button" class="amount-step amount-plus" aria-label="Menge für {{ item.name }} erhöhen">+</button>
+              <span class="amount-unit">{{ item.unit }}</span>
+            </span>
+            <button type="button" class="remove-product" title="entfernen" aria-label="{{ item.name }} entfernen">
+              <svg class="trash-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4.5 7h15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 7V5.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6.8 7.2 8 19.2h8l1.2-12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M10 11v5.2M14 11v5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </li>
+        {% endfor %}
+      </ul>
+      <button type="button" id="add-product" class="add-product">
+        <svg class="plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4.5 v15 M4.5 12 h15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        Produkt hinzufügen
+      </button>
+    </div>
+    <fieldset class="optimize">
+      <legend>Optimierung</legend>
+      <label class="optimize-choice">
+        <input type="radio" name="ziel" value="preis" {% if optimization == "preis" %}checked{% endif %} />
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="12" fill="#16a34a"/>
+          <circle cx="16" cy="16" r="8.5" fill="none" stroke="#dcfce7" stroke-width="1.6"/>
+          <path d="M16 9.2 v13.6 M12.4 12.4 h5.2 a2.6 2.6 0 0 1 0 5.2 H13.2 a2.6 2.6 0 0 0 0 5.2 h6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Preisoptimierung</span>
+      </label>
+      <label class="optimize-choice">
+        <input type="radio" name="ziel" value="gesundheit" {% if optimization == "gesundheit" %}checked{% endif %} />
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 26.5 C8 20.4 5.2 15.6 7.2 11.4 8.8 8 12.4 7.6 15 10.2 L16 11.3 17 10.2 C19.6 7.6 23.2 8 24.8 11.4 26.8 15.6 24 20.4 16 26.5z" fill="#e11d48"/>
+          <path d="M11.2 15.6 h3.1 l1.2-2.4 2.2 5 1.3-2.6 h2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Gesundheitsoptimierung</span>
+      </label>
+      <label class="optimize-choice">
+        <input type="radio" name="ziel" value="co2" {% if optimization == "co2" %}checked{% endif %} />
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <ellipse cx="9.5" cy="8.2" rx="2.1" ry="2.7" fill="#166534" transform="rotate(-25 9.5 8.2)"/>
+          <ellipse cx="14.6" cy="6.2" rx="2.2" ry="3" fill="#15803d"/>
+          <ellipse cx="19.6" cy="7.2" rx="2" ry="2.7" fill="#16a34a" transform="rotate(18 19.6 7.2)"/>
+          <ellipse cx="23.6" cy="10.4" rx="1.7" ry="2.3" fill="#22c55e" transform="rotate(32 23.6 10.4)"/>
+          <ellipse cx="15.8" cy="20.2" rx="6.6" ry="8.2" fill="#15803d"/>
+        </svg>
+        <span>CO2 Abdruck</span>
+      </label>
+    </fieldset>
+    <label for="kriterien">Individuelle KI-Suche
+      <textarea id="kriterien" name="kriterien" rows="3" placeholder="Eigene Kriterien für die Optimierung beschreiben">{{ criteria }}</textarea>
+    </label>
+    <button type="submit" id="find-products" disabled>
+      <svg class="note-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="2.2" y="6.4" width="14.2" height="15.2" rx="1.6" fill="#fff7e6" stroke="#f59e0b" stroke-width="1.3"/>
+        <path d="M5.2 11.2 h8.2 M5.2 14.4 h6.4 M5.2 17.6 h5" fill="none" stroke="#f59e0b" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M17.2 1.4 l1.05 2.5 2.65.2 -2.05 1.75.65 2.6 -2.3-1.4 -2.3 1.4.65-2.6 -2.05-1.75 2.65-.2z" fill="#f59e0b"/>
+      </svg>
+      Jetzt Produkte finden
+    </button>
+    <div id="waiting" class="waiting" hidden data-wait-ms="2000" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <p>Produkte werden gesucht…</p>
+    </div>
+    <p class="form-hint" id="search-hint">Bitte einen Ort, einen Supermarkt und mindestens ein Produkt angeben.</p>
+    {% if form_error %}<p class="error">{{ form_error }}</p>{% endif %}
+  </form>
+
+  {% if show_results %}
+    <section class="map-results" aria-label="Suchergebnisse">
+      <h2>{{ results_heading }}</h2>
+      {% if notice %}<p class="result-note">{{ notice }}</p>{% endif %}
+      {% if products %}
+        <div class="result-tools">
+          <p class="result-count">{% if searched %}{{ products|length }} {% if "Leider" in notice %}ähnliche {% endif %}Treffer{% else %}{{ products|length }} Produkte{% endif %} aus dem Sortiment</p>
+        </div>
+      {% endif %}
+      {% if result_place and map_lat is not None %}
+        <link rel="stylesheet" href="{% static 'vendor/leaflet/leaflet.css' %}">
+        <div id="store-map" class="city-map" data-lat="{{ map_lat|stringformat:'.6f' }}" data-lng="{{ map_lng|stringformat:'.6f' }}" data-zoom="{{ map_zoom }}" role="region" aria-label="Karte {{ result_place }}"></div>
+        <div id="store-markers" hidden>
+          {% for store in stores %}
+            <div class="store-flag" data-lat="{{ store.lat|stringformat:'.6f' }}" data-lng="{{ store.lng|stringformat:'.6f' }}" tabindex="0">
+              <span class="flag-cloth" style="background: {{ store.flag_bg }}; color: {{ store.flag_fg }}">{{ store.supermarket_name }}</span>
+              <span class="flag-pole"></span>
+              <span class="branch-tip">
+                <strong>{{ store.supermarket_name }}</strong>
+                <span class="branch-place">{{ store.store_address }}</span>
+                <ul>
+                  {% for offer in store.offers %}
+                    <li><span>{{ offer.name }}</span><span>{{ offer.price_label }}</span></li>
+                  {% endfor %}
+                </ul>
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if price_optimized %}
+        <div class="price-summary" id="price-summary">
+          <p class="basket-total"><span>Summe der gewählten Packungen</span> <strong id="basket-total">{{ basket_total_label }}</strong></p>
+          <p class="basket-savings" title="Je Produktart ist das Angebot mit dem niedrigsten Preis je Kilogramm, Liter oder Stück gewählt.">Gesamtersparnis gegenüber den teuersten Angeboten: <strong id="basket-savings">{{ savings_label }} ({{ savings_percent }} %)</strong></p>
+        </div>
+      {% endif %}
+      {% if co2_optimized %}
+        <div class="price-summary co2-summary" id="co2-summary">
+          <p class="basket-total"><span>Summe des CO2-Abdrucks</span> <strong id="basket-total">{{ basket_total_label }}</strong></p>
+          <p class="basket-savings" title="Je Produktart ist die Packung mit dem niedrigsten Agribalyse-Wert gewählt. Eine Bio-Packung nutzt die Bio-Zeile nur, wenn Agribalyse für dieses Lebensmittel ein Hofpaar führt.">Ersparnis gegenüber den höchsten Abdrücken: <strong id="basket-savings">{{ savings_label }} ({{ savings_percent }} %)</strong></p>
+          <p class="co2-source">
+            Quelle: ADEME, AGRIBALYSE 4 Synthese (AGRIBALYSE 3.2), Stand 30.06.2026,
+            kg CO2-Äq. je kg Fertigprodukt,
+            <a href="https://data.ademe.fr/datasets/agribalyse-synthese">Datensatz</a>.
+            Die Bio-Zahl nutzt das Hofpaar aus
+            <a href="https://doi.org/10.57745/XTENSJ">AGRIBALYSE 3.2</a>
+            nur bei Hähnchen, Schwein, Rind und Apfel.
+            <a href="https://www.etalab.gouv.fr/licence-ouverte-open-licence">Lizenz Ouverte Etalab 2.0</a>.
+            Diese Nennung ist keine Empfehlung der ADEME.
+          </p>
+        </div>
+      {% endif %}
+      {% if searched and products %}
+        <p class="pdf-bar">
+          <a class="pdf-download" href="{% url 'ergebnisse_pdf' %}?{{ request.GET.urlencode }}">
+            <svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3.5 v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7.5 10 L12 15 L16.5 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 19.5 h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Produktliste herunterladen
+          </a>
+        </p>
+      {% endif %}
+      {% if products %}
+        <div class="sort-buttons" role="group" aria-label="Ergebnisse sortieren">
+          <button type="button" class="sort-button" data-sort="name">Name</button>
+          <button type="button" class="sort-button" data-sort="distance"{% if not can_sort_distance %} disabled{% endif %}>Abstand</button>
+          <button type="button" class="sort-button" data-sort="price">Preis</button>
+        </div>
+        <ul class="product-results">
+          {% for product in products %}
+            <li data-name="{{ product.product_name }}" data-price="{{ product.current_price|stringformat:'0.2f' }}"{% if product.distance_km is not None %} data-distance="{{ product.distance_km|stringformat:'0.1f' }}"{% endif %}>
+              {% if product.image_url %}<img class="product-photo" src="{{ product.image_url }}" alt="{{ product.product_name }}" />{% endif %}
+              <div class="product-copy">
+                <div class="product-title-row">
+                  <strong>{{ product.product_name }}</strong>
+                  {% if product.flags %}
+                    <span class="product-flags">
+                      {% for flag in product.flags %}
+                        <span class="product-flag">
+                          {% if flag == "Bio" %}
+                            <svg class="flag-icon" viewBox="0 0 16 16" aria-hidden="true">
+                              <path d="M2.2 13.4C3.6 7.4 7.4 3.4 13.8 2.2 12.6 8.4 8.4 12.6 2.2 13.4z" fill="#16a34a"/>
+                              <path d="M3.4 12.4c2.2-2.4 4.8-4.4 8.2-5.6" fill="none" stroke="#14532d" stroke-width="1.1" stroke-linecap="round"/>
+                            </svg>
+                          {% elif flag == "Pfand" %}
+                            <svg class="flag-icon" viewBox="0 0 16 16" aria-hidden="true">
+                              <rect x="6" y="1.1" width="4" height="2.1" rx="0.6" fill="#0369a1"/>
+                              <path d="M4.5 4.4h7l-.7 8.5a1.3 1.3 0 0 1-1.3 1.2H6.5a1.3 1.3 0 0 1-1.3-1.2z" fill="#0ea5e9"/>
+                            </svg>
+                          {% endif %}
+                          <span>{{ flag }}</span>
+                          <span class="flag-check" aria-hidden="true">✓</span>
+                        </span>
+                      {% endfor %}
+                    </span>
+                  {% endif %}
+                </div>
+                <span>{{ product.brand }} · {{ product.main_category }} · {{ product.quantity_label }}</span>
+                <span>{{ product.supermarket_name }}, {{ product.store_address }}{% if product.distance_km is not None %} · {{ product.distance_km }} km{% endif %}</span>
+                <span class="price-row">
+                  <span class="price"{% if product.price_kind %} title="{{ product.price_kind }}"{% endif %}>{{ product.price_label }}</span>
+                  {% if price_optimized or co2_optimized and product.line_savings %}
+                    <button type="button" class="savings-badge" title="Sie haben {{ product.savings_label }} gespart" aria-label="Sie haben {{ product.savings_label }} gespart">-{{ product.savings_label }}</button>
+                  {% endif %}
+                  {% if product.show_regular %}<span class="old-price">{{ product.regular_label }}</span>{% endif %}
+                </span>
+                {% if price_optimized %}<span class="base-price">{{ product.base_price_label }}</span>{% endif %}
+                {% if co2_optimized %}<span class="base-price">{{ product.co2_label }} · {{ product.co2_basis }}</span>{% endif %}
+                <details class="product-details">
+                  <summary>Details</summary>
+                  <h3>Produktbeschreibung</h3>
+                  <p>{{ product.description }}</p>
+                  <h3>Konservierungs- und Zusatzstoffe</h3>
+                  {% if product.additives %}
+                    <ul>
+                      {% for additive in product.additives %}
+                        <li>{{ additive }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p>keine</p>
+                  {% endif %}
+                </details>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'search-form.js' %}?v=11"></script>
+  <script src="{% static 'vendor/leaflet/leaflet.js' %}"></script>
+  <script src="{% static 'store-map.js' %}?v=1"></script>
+  <script>
+    function readNumber(value) {
+      if (value === undefined || value === "") {
+        return NaN;
+      }
+      return Number(String(value).replace(",", "."));
+    }
+    var resultList = document.querySelector(".product-results");
+    document.querySelectorAll(".sort-button").forEach(function (button) {
+      button.dataset.label = button.textContent;
+      button.addEventListener("click", function () {
+        if (!resultList || button.disabled) {
+          return;
+        }
+        var mode = button.dataset.sort;
+        var descending = button.classList.contains("is-active") && button.dataset.order !== "desc";
+        button.dataset.order = descending ? "desc" : "asc";
+        var items = Array.prototype.slice.call(resultList.children);
+        items.sort(function (left, right) {
+          var result = 0;
+          if (mode === "distance") {
+            var leftDistance = readNumber(left.dataset.distance);
+            var rightDistance = readNumber(right.dataset.distance);
+            var leftMissing = Number.isNaN(leftDistance);
+            var rightMissing = Number.isNaN(rightDistance);
+            if (leftMissing !== rightMissing) {
+              return leftMissing ? 1 : -1;
+            }
+            result = leftDistance - rightDistance;
+          } else if (mode === "price") {
+            result = readNumber(left.dataset.price) - readNumber(right.dataset.price);
+          } else {
+            result = (left.dataset.name || "").localeCompare(right.dataset.name || "", "de");
+          }
+          if (!result) {
+            return (left.dataset.name || "").localeCompare(right.dataset.name || "", "de");
+          }
+          return descending ? -result : result;
+        });
+        items.forEach(function (item) {
+          resultList.appendChild(item);
+        });
+        document.querySelectorAll(".sort-button").forEach(function (other) {
+          var active = other === button;
+          other.classList.toggle("is-active", active);
+          if (!active) {
+            other.textContent = other.dataset.label;
+            other.removeAttribute("data-order");
+          }
+        });
+        button.textContent = button.dataset.label + (descending ? " ↓" : " ↑");
+        button.setAttribute("aria-label", button.dataset.label + (descending ? " absteigend" : " aufsteigend"));
+      });
+    });
+  </script>
 {% endblock %}

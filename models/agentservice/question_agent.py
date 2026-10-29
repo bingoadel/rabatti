@@ -7,26 +7,6 @@ from models.Tools.historian_greeting_tool import HistorianGreetingTool
 from models.agentservice.base_agent import BaseAgent
 
 
-def load_env_file() -> None:
-    """Lädt Variablen aus einer .env-Datei im Projektordner.
-
-    Summary:
-        Dadurch kann OPENAI_API_KEY ohne harte Kodierung im Code gesetzt werden.
-        Das ist typisch für Django-/Python-Projekte.
-    """
-    env_path = Path(__file__).resolve().parents[2] / ".env"
-    if not env_path.exists():
-        return
-
-    for line in env_path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-
-        key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
-
-
 class QuestionAgent(BaseAgent):
     """Ein Agent für allgemeine Fragen mit OpenAI-Integration.
 
@@ -37,6 +17,26 @@ class QuestionAgent(BaseAgent):
         function_tool an den OpenAI-Agenten übergeben und an jede eigentliche
         Antwort angehängt.
     """
+
+    @staticmethod
+    def load_env_file() -> None:
+        """Lädt Variablen aus einer .env-Datei im Projektordner.
+
+        Summary:
+            Dadurch kann OPENAI_API_KEY ohne harte Kodierung im Code gesetzt werden.
+            Das ist typisch für Django-/Python-Projekte.
+        """
+        env_path = Path(__file__).resolve().parents[2] / ".env"
+        if not env_path.exists():
+            return
+
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
 
     def __init__(
         self,
@@ -52,7 +52,7 @@ class QuestionAgent(BaseAgent):
             und das Modell. Das Gruß-Tool wird mit function_tool verpackt und dem
             OpenAI-Agenten in der tools-Liste übergeben.
         """
-        load_env_file()
+        QuestionAgent.load_env_file()
         self.fallback_answer = fallback_answer
         self.api_key = api_key if api_key is not None else os.getenv("OPENAI_API_KEY")
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-4o-mini")

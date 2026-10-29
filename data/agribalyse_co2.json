@@ -1,0 +1,390 @@
+{
+  "attribution": "ADEME, AGRIBALYSE",
+  "license": "Licence Ouverte Etalab 2.0",
+  "consumer_title": "AGRIBALYSE 4 Synthese",
+  "consumer_field": "Changement_climatique",
+  "consumer_unit": "kg CO2-Äq. je kg Fertigprodukt",
+  "consumer_updated": "2026-06-30",
+  "farm_title": "AGRIBALYSE 3.2, 1 kg ab Hof",
+  "farm_note": "Bio-Zahl = Fertigprodukt mal Bio-Hofwert geteilt durch den konventionellen Hofwert.",
+  "anchors": {
+    "milk_whole": {
+      "ciqual": "19023",
+      "name_fr": "Lait entier, UHT",
+      "kg_co2e": 1.1237418
+    },
+    "milk_low": {
+      "ciqual": "19041",
+      "name_fr": "Lait demi-écrémé, UHT",
+      "kg_co2e": 0.98293464
+    },
+    "yogurt": {
+      "ciqual": "19593",
+      "name_fr": "Yaourt, lait fermenté ou spécialité laitière, nature",
+      "kg_co2e": 1.5913934
+    },
+    "quark": {
+      "ciqual": "19644",
+      "name_fr": "Fromage blanc nature, 0% MG",
+      "kg_co2e": 1.5718523
+    },
+    "butter": {
+      "ciqual": "16400",
+      "name_fr": "Beurre à 82% MG, doux",
+      "kg_co2e": 6.3338158
+    },
+    "butter_light": {
+      "ciqual": "16415",
+      "name_fr": "Beurre à 39-41% MG, léger, doux",
+      "kg_co2e": 3.4432992
+    },
+    "margarine": {
+      "ciqual": "16614",
+      "name_fr": "Matière grasse végétale (type margarine) à 80% MG, salé",
+      "kg_co2e": 2.7156331
+    },
+    "bread": {
+      "ciqual": "7001",
+      "name_fr": "Pain, baguette, courante",
+      "kg_co2e": 0.77694649
+    },
+    "apple": {
+      "ciqual": "13039",
+      "name_fr": "Pomme, pulpe et peau, crue",
+      "kg_co2e": 0.52882804,
+      "organic": {
+        "kg_co2e": 0.822402,
+        "farm_organic_name": "Pomme, biologique, moyenne nationale, au verger, France",
+        "farm_organic_kg": 0.11693041,
+        "farm_conventional_name": "Pomme conventionnelle, moyenne nationale, au verger, France",
+        "farm_conventional_kg": 0.075189594
+      }
+    },
+    "banana": {
+      "ciqual": "13005",
+      "name_fr": "Banane, pulpe, crue",
+      "kg_co2e": 0.792961
+    },
+    "tomato": {
+      "ciqual": "20047",
+      "name_fr": "Tomate, crue",
+      "kg_co2e": 2.2663702
+    },
+    "tomato_dried": {
+      "ciqual": "20189",
+      "name_fr": "Tomate, séchée",
+      "kg_co2e": 9.1496803
+    },
+    "tomato_puree": {
+      "ciqual": "20170",
+      "name_fr": "Tomate, purée, appertisée",
+      "kg_co2e": 1.797095
+    },
+    "carrot": {
+      "ciqual": "20009",
+      "name_fr": "Carotte, crue",
+      "kg_co2e": 0.40540258
+    },
+    "potato": {
+      "ciqual": "4008",
+      "name_fr": "Pomme de terre, sans peau, crue",
+      "kg_co2e": 0.81226392
+    },
+    "lettuce": {
+      "ciqual": "20031",
+      "name_fr": "Laitue, crue",
+      "kg_co2e": 0.900032
+    },
+    "onion": {
+      "ciqual": "20034",
+      "name_fr": "Oignon, cru",
+      "kg_co2e": 0.39228626
+    },
+    "berry": {
+      "ciqual": "13997",
+      "name_fr": "Fruits rouges, crus (framboises, fraises, groseilles, cassis)",
+      "kg_co2e": 1.5269305
+    },
+    "chicken": {
+      "ciqual": "36017",
+      "name_fr": "Poulet, filet, sans peau, cru",
+      "kg_co2e": 5.4036578,
+      "organic": {
+        "kg_co2e": 8.373965,
+        "farm_organic_name": "Poulet, biologique, à la ferme, France",
+        "farm_organic_kg": 2.9846191,
+        "farm_conventional_name": "Poulet, moyenne nationale, à la ferme, France",
+        "farm_conventional_kg": 1.9259527
+      }
+    },
+    "turkey": {
+      "ciqual": "36304",
+      "name_fr": "Dinde, escalope, crue",
+      "kg_co2e": 5.4036578
+    },
+    "beef": {
+      "ciqual": "6201",
+      "name_fr": "Boeuf, steak ou bifteck, cru",
+      "kg_co2e": 27.449719,
+      "organic": {
+        "kg_co2e": 29.547405,
+        "farm_organic_name": "Boeuf, biologique, moyenne nationale, à la ferme, France",
+        "farm_organic_kg": 15.58029,
+        "farm_conventional_name": "Boeuf, moyenne nationale, à la ferme, France",
+        "farm_conventional_kg": 14.474184
+      }
+    },
+    "pork": {
+      "ciqual": "28100",
+      "name_fr": "Porc, côte, crue",
+      "kg_co2e": 6.5801047,
+      "organic": {
+        "kg_co2e": 13.265389,
+        "farm_organic_name": "Porc, biologique, moyenne nationale (50% intérieur, 50% extérieur), à la ferme, France",
+        "farm_organic_kg": 5.6329806,
+        "farm_conventional_name": "Porc, conventionnel, moyenne nationale, à la ferme, France",
+        "farm_conventional_kg": 2.7941587
+      }
+    },
+    "lamb": {
+      "ciqual": "21500",
+      "name_fr": "Agneau, côtelette, crue",
+      "kg_co2e": 30.195343
+    },
+    "ham_cooked": {
+      "ciqual": "28910",
+      "name_fr": "Jambon cuit, choix",
+      "kg_co2e": 7.0833401
+    },
+    "ham_raw": {
+      "ciqual": "28800",
+      "name_fr": "Jambon cru",
+      "kg_co2e": 13.104505
+    },
+    "merguez": {
+      "ciqual": "30156",
+      "name_fr": "Merguez, boeuf et mouton, crue",
+      "kg_co2e": 34.801403
+    },
+    "egg": {
+      "ciqual": "22000",
+      "name_fr": "Oeuf, cru",
+      "kg_co2e": 2.1173169
+    },
+    "salmon": {
+      "ciqual": "26036",
+      "name_fr": "Saumon, cru, élevage",
+      "kg_co2e": 5.6299604
+    },
+    "tuna": {
+      "ciqual": "26076",
+      "name_fr": "Thon germon ou thon blanc, cru",
+      "kg_co2e": 9.4899756
+    },
+    "white_fish": {
+      "ciqual": "26043",
+      "name_fr": "Cabillaud, cru",
+      "kg_co2e": 12.188752
+    },
+    "pasta": {
+      "ciqual": "9810",
+      "name_fr": "Pâtes sèches standard, crues",
+      "kg_co2e": 1.7500837
+    },
+    "pasta_egg": {
+      "ciqual": "9821",
+      "name_fr": "Pâtes sèches, aux œufs, crues",
+      "kg_co2e": 1.6400264
+    },
+    "rice": {
+      "ciqual": "9101",
+      "name_fr": "Riz blanc étuvé, cru",
+      "kg_co2e": 1.7200367
+    },
+    "oat": {
+      "ciqual": "9311",
+      "name_fr": "Flocon d'avoine",
+      "kg_co2e": 0.9572498
+    },
+    "lentil": {
+      "ciqual": "20586",
+      "name_fr": "Lentille blonde, sèche",
+      "kg_co2e": 1.035852
+    },
+    "chickpea": {
+      "ciqual": "20532",
+      "name_fr": "Pois chiche, appertisé, égoutté",
+      "kg_co2e": 3.460575
+    },
+    "green_bean": {
+      "ciqual": "20061",
+      "name_fr": "Haricot vert, cru",
+      "kg_co2e": 0.50328593
+    },
+    "coffee": {
+      "ciqual": "18003",
+      "name_fr": "Café, moulu",
+      "kg_co2e": 9.2355316
+    },
+    "tea": {
+      "ciqual": "18020",
+      "name_fr": "Thé infusé, non sucré",
+      "kg_co2e": 0.055482086
+    },
+    "water": {
+      "ciqual": "18430",
+      "name_fr": "Eau embouteillée de source",
+      "kg_co2e": 0.33559328
+    },
+    "cola": {
+      "ciqual": "18018",
+      "name_fr": "Cola, sucré",
+      "kg_co2e": 0.51481871
+    },
+    "apple_juice": {
+      "ciqual": "2074",
+      "name_fr": "Jus de pomme, pur jus",
+      "kg_co2e": 0.83770808
+    },
+    "orange_juice": {
+      "ciqual": "2012",
+      "name_fr": "Jus d'orange, à base de concentré",
+      "kg_co2e": 1.1658771
+    },
+    "sugar": {
+      "ciqual": "31016",
+      "name_fr": "Sucre blanc",
+      "kg_co2e": 0.78098328
+    },
+    "chocolate": {
+      "ciqual": "31004",
+      "name_fr": "Chocolat au lait, tablette",
+      "kg_co2e": 12.244527
+    },
+    "honey": {
+      "ciqual": "31008",
+      "name_fr": "Miel",
+      "kg_co2e": 42.825119
+    },
+    "salt": {
+      "ciqual": "11017",
+      "name_fr": "Sel blanc alimentaire, non iodé, non fluoré (marin, ignigène ou gemme)",
+      "kg_co2e": 0.62215974
+    },
+    "pepper": {
+      "ciqual": "11015",
+      "name_fr": "Poivre noir, poudre",
+      "kg_co2e": 7.4527581
+    },
+    "mustard": {
+      "ciqual": "11013",
+      "name_fr": "Moutarde",
+      "kg_co2e": 1.5603229
+    },
+    "ketchup": {
+      "ciqual": "11008",
+      "name_fr": "Ketchup",
+      "kg_co2e": 2.1186204
+    },
+    "mayonnaise": {
+      "ciqual": "11054",
+      "name_fr": "Mayonnaise (70% MG min.)",
+      "kg_co2e": 2.985598
+    },
+    "flour": {
+      "ciqual": "9436",
+      "name_fr": "Farine de blé tendre ou froment T55 (pour pains)",
+      "kg_co2e": 0.79014045
+    },
+    "rye_flour": {
+      "ciqual": "9415",
+      "name_fr": "Farine de blé tendre ou froment T150",
+      "kg_co2e": 0.79014045
+    },
+    "coconut": {
+      "ciqual": "18041",
+      "name_fr": "Lait de coco ou Crème de coco",
+      "kg_co2e": 0.77286564
+    },
+    "hummus": {
+      "ciqual": "25621",
+      "name_fr": "Houmous",
+      "kg_co2e": 1.3330579
+    },
+    "pizza": {
+      "ciqual": "25404",
+      "name_fr": "Pizza au fromage ou Pizza margherita",
+      "kg_co2e": 2.3295067
+    },
+    "olive_fruit": {
+      "ciqual": "13147",
+      "name_fr": "Olives vertes, fourrées ou farcies (anchois, poivrons, etc.)",
+      "kg_co2e": 1.1806579
+    },
+    "wine": {
+      "ciqual": "5214",
+      "name_fr": "Vin rouge",
+      "kg_co2e": 1.5488647
+    },
+    "beer": {
+      "ciqual": "5001",
+      "name_fr": "Bière \"coeur de marché\" (4-5° alcool)",
+      "kg_co2e": 1.3523206
+    },
+    "cheese": {
+      "ciqual": "12115",
+      "name_fr": "Emmental ou emmenthal",
+      "kg_co2e": 5.0919999
+    },
+    "cream": {
+      "ciqual": "19415",
+      "name_fr": "Crème de lait, 30% MG, semi-épaisse, UHT",
+      "kg_co2e": 3.085498
+    },
+    "olive_oil": {
+      "ciqual": "17270",
+      "name_fr": "Huile d'olive vierge extra",
+      "kg_co2e": 1.3123269
+    },
+    "rape_oil": {
+      "ciqual": "17130",
+      "name_fr": "Huile de colza",
+      "kg_co2e": 3.1297872
+    },
+    "sunflower_oil": {
+      "ciqual": "17440",
+      "name_fr": "Huile de tournesol",
+      "kg_co2e": 2.1567127
+    },
+    "sesame_oil": {
+      "ciqual": "17400",
+      "name_fr": "Huile de sésame",
+      "kg_co2e": 4.577577
+    },
+    "orange": {
+      "ciqual": "13034",
+      "name_fr": "Orange, pulpe, crue",
+      "kg_co2e": 0.55320136
+    },
+    "lemon": {
+      "ciqual": "13009",
+      "name_fr": "Citron, pulpe, cru",
+      "kg_co2e": 0.7150827
+    },
+    "sausage": {
+      "ciqual": "30301",
+      "name_fr": "Saucisson sec pur porc",
+      "kg_co2e": 8.5835191
+    },
+    "spinach": {
+      "ciqual": "20059",
+      "name_fr": "Épinard, cru",
+      "kg_co2e": 0.42630718
+    },
+    "pepper_veg": {
+      "ciqual": "20087",
+      "name_fr": "Poivron rouge, cru",
+      "kg_co2e": 3.099595
+    }
+  }
+}

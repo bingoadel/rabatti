@@ -22,4 +22,4 @@ RUN printf '%s\n' '#!/bin/sh' 'set -e' 'python manage.py collectstatic --noinput
 # Gunicorn auf Port 8000 starten
 EXPOSE 8000
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "agent_project.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]

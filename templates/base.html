@@ -5,11 +5,77 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Werkzeuge{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v=75" />
   </head>
   <body>
-    <div class="container {% block container_class %}{% endblock %}">
-      {% block content %}{% endblock %}
+    {% block overlay %}{% endblock %}
+    <header class="top-nav">
+      <div class="nav-main">
+        <a class="brand" href="{% url 'start' %}">
+          <img src="{% static 'rabattparty-logo.png' %}?v=3" alt="" />
+          <span class="brand-name">Rabattparty</span>
+          <span class="brand-slogan">Feier mit uns und spare bares Geld</span>
+        </a>
+        <nav class="top-links" aria-label="Funktionen">
+        <a href="{% url 'start' %}#discount-search">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="6" y="6" width="16" height="21" rx="3" fill="#2563eb"/>
+            <rect x="10" y="3.5" width="8" height="4.5" rx="1.5" fill="#93c5fd"/>
+            <rect x="9.5" y="12" width="9" height="2" rx="1" fill="#fff"/>
+            <rect x="9.5" y="16.5" width="9" height="2" rx="1" fill="#fff"/>
+            <rect x="9.5" y="21" width="6" height="2" rx="1" fill="#fff"/>
+            <circle cx="23.5" cy="23.5" r="6.2" fill="#16a34a"/>
+            <path d="M20.6 23.5 l2 2 4-4.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Einkaufszettel optimieren</span>
+        </a>
+        <button type="button">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M8 27 V6.5 h10.5 l1.4 3.2 H25 V18 H16.2 l-1.3-3 H11 V27z" fill="#7c3aed"/>
+            <path d="M8 6.5 h10.5 l1.4 3.2 H25" fill="none" stroke="#5b21b6" stroke-width="1.2" stroke-linejoin="round"/>
+            <circle cx="23.2" cy="23.2" r="5.4" fill="#f59e0b"/>
+            <path d="M23.2 20.4 v3.2 l2 1.3" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Unsere Mission</span>
+        </button>
+        <button type="button">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M16 4.2 a6.4 6.4 0 0 1 6.4 6.4 v3.2 l2.2 3.6 a1.4 1.4 0 0 1-1.2 2.1 H8.6 a1.4 1.4 0 0 1-1.2-2.1 l2.2-3.6 V10.6 A6.4 6.4 0 0 1 16 4.2z" fill="#ea580c"/>
+            <path d="M13.2 20.2 a2.8 2.8 0 0 0 5.6 0" fill="none" stroke="#c2410c" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="24.4" cy="8.2" r="4.2" fill="#16a34a"/>
+            <path d="M22.6 8.2 h3.6 M24.4 6.4 v3.6" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span>Rabattalarm</span>
+        </button>
+      </nav>
+      </div>
+      {% if user.is_authenticated %}
+        <form class="login-form" method="post" action="{% url 'abmelden' %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+          <span class="login-user">{{ user.get_username }}</span>
+          <button type="submit">Abmelden</button>
+        </form>
+      {% else %}
+        <form class="login-form" method="post" action="{% url 'anmelden' %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+          <label class="visually-hidden" for="login-name">E-Mail</label>
+          <input id="login-name" name="username" type="text" placeholder="E-Mail" autocomplete="username" />
+          <label class="visually-hidden" for="login-password">Passwort</label>
+          <input id="login-password" name="password" type="password" placeholder="Passwort" autocomplete="current-password" />
+          <button type="submit">Anmelden</button>
+          {% for message in messages %}
+            {% if "login" in message.tags %}<span class="login-note">{{ message }}</span>{% endif %}
+          {% endfor %}
+        </form>
+      {% endif %}
+    </header>
+    <div class="page">
+      <div class="container {% block container_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+        <p class="legal-link"><a href="{% url 'impressum' %}">Impressum</a></p>
+      </div>
     </div>
     {% block scripts %}{% endblock %}
   </body>

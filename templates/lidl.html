@@ -5,9 +5,9 @@
 {% block container_class %}wide{% endblock %}
 
 {% block content %}
-  <p class="back"><a href="{% url 'start' %}">Zur Auswahl</a></p>
+  <p class="back"><a href="{% url 'start' %}">Zur Startseite</a></p>
   <h1>Lidl-Preisrabatte</h1>
-  <p class="intro">Gib einen Ort oder eine Postleitzahl ein. Die Liste stammt aus dem öffentlichen Aktionsprospekt auf lidl.de, in der bundesweiten Ausgabe.</p>
+  <p class="intro">Gib einen Ort oder eine Postleitzahl ein. Die Liste stammt aus dem öffentlichen Aktionsprospekt der Lidl-Region zu diesem Ort.</p>
 
   <form method="post" id="lidl-form">
     {% csrf_token %}
@@ -29,7 +29,7 @@
     <div class="store-list">
       {% for item in stores %}
         <button type="submit" form="lidl-form" name="store_key" value="{{ item.store_key }}" class="store-button{% if store and item.store_key == store.store_key %} is-selected{% endif %}">
-          <img class="lidl-logo" src="{% static 'lidl-logo.svg' %}" alt="" />
+          <img class="lidl-logo" src="{% static 'markets/lidl.svg' %}" alt="" />
           {{ item.label }}
         </button>
       {% endfor %}
@@ -38,7 +38,7 @@
 
   {% if store %}
     <h2 class="store-name">
-      <img class="lidl-logo" src="{% static 'lidl-logo.svg' %}" alt="Lidl" />
+      <img class="lidl-logo" src="{% static 'markets/lidl.svg' %}" alt="Lidl" />
       <span>{{ store.label }}</span>
     </h2>
   {% endif %}

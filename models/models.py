@@ -1,7 +1,10 @@
-"""Datenbankmodelle.
+"""Datenbankmodelle der App.
 
 Summary:
-    Neue Tabellen werden in dieser Datei als Django-Model-Klassen angelegt.
-    Die Anwendung speichert bisher keine eigenen Daten. Agenten, Tools und
-    Use Cases liegen als Pakete im selben Ordner.
+    Django lädt dieses Modul. Die Klassen liegen in den Dateien ihres Namens.
 """
+
+from models.product_kind import ProductKind
+from models.product_kind_nutrient import ProductKindNutrient
+
+__all__ = ["ProductKind", "ProductKindNutrient"]
